@@ -1,0 +1,261 @@
+/* PhishShield Extension — Popup Styles */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg-2: #161b22;
+  --bg-3: #21262d;
+  --border: #30363d;
+  --orange: #E8510A;
+  --orange-dim: rgba(232, 81, 10, 0.15);
+  --red: #f85149;
+  --yellow: #d29922;
+  --green: #3fb950;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 8px;
+}
+
+body {
+  width: 340px;
+  min-height: 200px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.ps-root { display: flex; flex-direction: column; gap: 0; }
+
+/* Header */
+.ps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+}
+
+.ps-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.ps-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot--idle { background: var(--text-muted); }
+.dot--scanning { background: var(--yellow); animation: pulse 1s infinite; }
+.dot--safe { background: var(--green); }
+.dot--danger { background: var(--red); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* Preview */
+.ps-preview {
+  padding: 10px 14px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.preview-hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.preview-hint strong { color: var(--orange); }
+
+/* Analyze button */
+.ps-btn-analyze {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 28px);
+  margin: 12px 14px;
+  padding: 10px;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.ps-btn-analyze:hover { background: #c94409; }
+.ps-btn-analyze:active { transform: scale(0.98); }
+
+/* Loading */
+.ps-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 14px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.spinner {
+  width: 24px; height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Result Panel */
+.ps-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.risk-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.badge--high { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+.badge--medium { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+.badge--low { background: rgba(232,81,10,0.12); color: var(--orange); border: 1px solid rgba(232,81,10,0.25); }
+.badge--safe { background: rgba(63,185,80,0.12); color: var(--green); border: 1px solid rgba(63,185,80,0.25); }
+
+.risk-score { text-align: right; }
+.score-label { display: block; font-size: 10px; color: var(--text-muted); }
+.score-value { font-family: var(--font-mono); font-size: 16px; font-weight: 700; }
+
+/* Gauge */
+.gauge-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 8px 14px 0;
+}
+#gaugeCanvas { display: block; }
+.gauge-label {
+  position: absolute;
+  bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Details */
+.ps-details {
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  background: var(--bg-2);
+  border-radius: 6px;
+}
+.detail-icon { font-size: 14px; }
+.detail-label { flex: 1; color: var(--text-muted); font-size: 12px; }
+.detail-value { font-family: var(--font-mono); font-size: 11px; color: var(--text); max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* XAI */
+.ps-xai {
+  margin: 8px 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.ps-xai summary {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--orange);
+  font-weight: 600;
+  user-select: none;
+}
+.ps-xai p {
+  padding: 8px 12px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* Feedback */
+.ps-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.fb-btn {
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text);
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fb-btn:hover { background: var(--bg-2); }
+.fb-yes:hover { border-color: var(--green); color: var(--green); }
+.fb-no:hover { border-color: var(--red); color: var(--red); }
+
+/* Footer */
+.ps-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg-2);
+}
+.ps-footer a {
+  color: var(--orange);
+  text-decoration: none;
+  font-size: 10px;
+}
+.ps-footer a:hover { text-decoration: underline; }
